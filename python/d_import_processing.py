@@ -1,2 +1,76 @@
+import pandas as pd
+
+
+def import_data():
+    data = pd.read_csv('data/raw/Overledenen__geslacht_en_leeftijd__per_week_04072020_132924.csv', header=[4, 5],
+                       index_col=0, skipfooter=1, engine='python')
+    return data
+
+
+def process_week_data(data):
+
+    data = data.reset_index()
+    data = pd.concat((data, data['index'].str.split(' week ', expand=True).rename(
+        columns={0: 'year', 1: 'week'})), axis=1)
+    data = data.drop('index', axis=1)
+
+    # TODO: convert data by week to 'average by day' while taking partial weeks into account
+
+    return data
+
+
+def process_data(data):
+
+    # Fix headers
+    data = data.drop('Perioden')
+    data = data.astype('int64')
+    data = data.rename(columns={'Totaal leeftijd': 'all', '0 tot 65 jaar': 'under65', '65 tot 80 jaar': '65to80',
+                         '80 jaar of ouder': 'over80', 'Mannen': 'M', 'Vrouwen': 'F',
+                         'Totaal mannen en vrouwen': 'A'})
+    data.columns = ['_'.join(col) for col in data.columns]
+
+    # Split year data from week data
+    year_indices = [str(x) for x in range(1995, 2020, 1)]
+    year_data = data.loc[year_indices]
+    week_data = data.loc[[x for x in data.index if x not in year_indices]]
+    full_week_data = week_data.loc[[x for x in week_data.index if 'dag' not in x]]
+
+    week_data = process_week_data(week_data)
+    full_week_data = process_week_data(full_week_data)
+
+    return {'year': year_data, 'week': week_data, 'full_week': full_week_data}
+
+
+def check_totals(data_dict):
+
+    year_data = data_dict['year']
+    week_data = data_dict['week']
+    diffs = {i: week_data.loc[week_data.year == i,].all_A.sum() - year_data.loc[i].all_A.sum() for i in year_data.index}
+
+    if not all(diffs[year] == 0 for year in diffs):
+        raise(ValueError, 'Year data and week data don\'t align')
+
+    # TODO: check day totals after creating them
+
+
+def save_data(data_dict):
+
+    save_dir = 'data/processed/'
+
+    data_dict['year'].to_pickle(save_dir + 'deaths_by_year.pkl')
+    data_dict['week'].to_pickle(save_dir + 'deaths_by_week.pkl')
+    data_dict['full_week'].to_pickle(save_dir + 'deaths_by_full_week.pkl')
+
+
 def run():
-    return None
+
+    data = import_data()
+    data_dict = process_data(data)
+    save_data(data_dict)
+    check_totals(data_dict)
+
+
+if __name__ == "__main__":
+    import os
+    os.chdir('..')
+    run()
