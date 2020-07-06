@@ -11,6 +11,7 @@ pyro-ppl = "*"
 seaborn = "*"
 statsmodels = "*"
 sklearn = "*"
+arviz = "*"
 
 [requires]
 python_version = "3.8"
