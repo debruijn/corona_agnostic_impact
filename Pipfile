@@ -12,6 +12,7 @@ seaborn = "*"
 statsmodels = "*"
 sklearn = "*"
 arviz = "*"
+pystan = "*"
 
 [requires]
 python_version = "3.8"
