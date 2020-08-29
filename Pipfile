@@ -13,6 +13,7 @@ statsmodels = "*"
 sklearn = "*"
 arviz = "*"
 pystan = "*"
+numpyro = "*"
 
 [requires]
 python_version = "3.8"
