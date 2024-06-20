@@ -1,11 +1,12 @@
 # corona-agnostic-impact
 A project to estimate the effect of "corona" (as it was referred to the most in Dutch; in English better known as covid)
-on the weekly death counts in the Netherlands, by making no assumptions for it being there.
+on the weekly death counts in the Netherlands, by making no assumptions for it being there (so the **impact** is 
+estimated in a **corona-agnostic** way).
 
-To run this, you need to get data from the CBS (the Dutch statistics office) and put it in data/raw/ under the name 
-'Overledenen__geslacht_en_leeftijd__per_week_{date}_{time}.csv'.
+To run this, you need to get data from the CBS (the Dutch statistics office) and put it in `data/raw/` under the name 
+`Overledenen__geslacht_en_leeftijd__per_week_{date}_{time}.csv`.
 
-Note that this has not been tested with data after 2020.
+Note that this has not been tested with data after October 2020.
 
 ## Main idea
 For the period up to 2020, the death counts are assumed to be made up of a weekly and a yearly component:
@@ -13,7 +14,7 @@ For the period up to 2020, the death counts are assumed to be made up of a weekl
 more deaths, especially among the elderly
 - the yearly component reflects medical advancements over time
 
-Then, starting from an identified start date (which is the 9th week of 2020 in the code) there is a weekly additional
+Then, starting from a specified start date (which is the 9th week of 2020 in the code) there is a weekly additional
 effect estimated. This weekly effect should be 0 (or not significantly different from 0) if there is no effect of covid.
 
 Currently, Numpyro is used to estimate this model, but Stan code to do a similar model (including some variants with
