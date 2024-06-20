@@ -13,23 +13,7 @@ import numpyro.distributions as dist
 
 
 class BaseModel:
-    """
-    This class contains all functions for creating a base Pyro model.
-    It takes as input:
-        'sdata': A dictionary containing:
-            'x_c': Pandas DataFrame for the control variables
-            'x_m': Pandas DataFrame for the media variables
-            'y': Pandas Series with the KPI values
-            'weight': Pandas Series with the weights
-        'priors': A dictionary that contains the location and scale parameters of the priors.
-            The format is a dictionary containing a dictionary: {'parameter_1': {'loc': value, 'scl': value}, ... etc.},
-            where the parameters are vectors with length of the parameter.
-            For instance: { 'alpha': {'loc': 0.0, 'scl': 1.0}, 
-                            'beta': {'loc': [0.0]*n_ctrl, 'scl': [1.0]*n_ctrl}, 
-                            'potential': {'loc': [0.0]*n_media, 'scl': [0.1]*n_media}, 
-                            'sigma': {'loc': 1.0, 'scl': 1.0}}
-    """
-    
+
     # Initializing the data
     def __init__(self, sdata):
         # Converting sdata input to model fields
