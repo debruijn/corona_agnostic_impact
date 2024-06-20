@@ -31,7 +31,3 @@ https://www.worldometers.info/coronavirus/country/netherlands/
 The conclusion of this is that there was a statistically significant increase in the amount of deaths during the first 
 wave of the covid crisis. It was not the case that "people who were already dying were being attributed as covid 
 deaths", as some people suggested back in 2020.
-
-## Note
-In case commits show up to be a bit weird, I had initially set this up with a temporary email address (since this was 
-not aimed to be public). On my Github mirror, this address is associated with another account.
