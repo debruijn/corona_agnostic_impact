@@ -7,7 +7,7 @@ def run():
     data = pd.read_pickle('data/processed/deaths_by_full_week.pkl')
 
     data['covid_week'] = 0
-    data.loc[(data.year == 2020) & (data.week>9), 'covid_week'] = \
+    data.loc[(data.year == 2020) & (data.week > 9), 'covid_week'] = \
         data.loc[(data.year == 2020) & (data.week > 9), 'week'] - 9
 
     sdata = {
@@ -49,9 +49,6 @@ def run():
     tmp = fit4.extract(pars='base_covid_eff')
     pd.Series(tmp['base_covid_eff'].mean(axis=0)).sum()
     print(fit4.stansummary(pars='total_covid_deaths'))
-
-
-    1+1
 
 
 if __name__ == "__main__":

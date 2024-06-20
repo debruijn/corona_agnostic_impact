@@ -1,8 +1,8 @@
 import pandas as pd
 
 
-def import_data():
-    data = pd.read_csv('data/raw/Overledenen__geslacht_en_leeftijd__per_week_04072020_132924.csv', header=[4, 5],
+def import_data(config):
+    data = pd.read_csv(f'data/raw/Overledenen__geslacht_en_leeftijd__per_week_{config.data_version}.csv', header=[4, 5],
                        index_col=0, skipfooter=1, engine='python')
     return data
 
@@ -44,6 +44,7 @@ def process_data(data):
 
     # Fix headers
     data = data.drop('Perioden')
+    data = data.loc[data[data != "."].isna().any(axis=1) == False]  # Drop rows with incomplete data; can be done nicer
     data = data.astype('int64')
     data = data.rename(columns={'Totaal leeftijd': 'all',
                                 '0 tot 65 jaar': 'under65',
@@ -78,26 +79,27 @@ def check_totals(data_dict):
     # TODO: check day totals after creating them
 
 
-def save_data(data_dict):
+def save_data(data_dict, config):
 
     save_dir = 'data/processed/'
 
-    data_dict['year'].to_pickle(save_dir + 'deaths_by_year.pkl')
-    data_dict['week'].to_pickle(save_dir + 'deaths_by_week.pkl')
-    data_dict['full_week'].to_pickle(save_dir + 'deaths_by_full_week.pkl')
-    data_dict['day'].to_pickle(save_dir + 'deaths_by_day.pkl')
+    data_dict['year'].to_pickle(save_dir + f'deaths_by_year_{config.data_version}.pkl')
+    data_dict['week'].to_pickle(save_dir + f'deaths_by_week_{config.data_version}.pkl')
+    data_dict['full_week'].to_pickle(save_dir + f'deaths_by_full_week_{config.data_version}.pkl')
+    data_dict['day'].to_pickle(save_dir + f'deaths_by_day_{config.data_version}.pkl')
 
 
-def run():
+def run(config):
 
-    data = import_data()
+    data = import_data(config)
     data_dict = process_data(data)
     data_dict['day'] = create_day_data_by_week(data_dict['week'])
-    save_data(data_dict)
+    save_data(data_dict, config)
     check_totals(data_dict)
 
 
 if __name__ == "__main__":
     import os
+    from config import config as run_config
     os.chdir('..')
-    run()
+    run(run_config)

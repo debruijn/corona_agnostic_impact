@@ -21,10 +21,10 @@ def plots_by_week(data):
             savefig(save_loc + file_name)
 
 
-def run():
+def run(config):
 
     # Load data
-    data = pd.read_pickle('data/processed/deaths_by_full_week.pkl')
+    data = pd.read_pickle(f'data/processed/deaths_by_full_week_{config.data_version}.pkl')
 
     # Make plots by week, excl 2020
     plots_by_week(data)
@@ -38,5 +38,6 @@ def run():
 
 if __name__ == "__main__":
     import os
+    from config import config as run_config
     os.chdir('..')
-    run()
+    run(run_config)
