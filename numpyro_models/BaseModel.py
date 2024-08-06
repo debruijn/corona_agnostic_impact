@@ -38,7 +38,7 @@ class BaseModel:
         # prior_year_eff = dist.Normal(self.mu_y, self.sigma_y).expand((self.Y,))
         # year_eff = numpyro.sample('year_eff', prior_year_eff)
 
-        prior_first_year_eff = dist.HalfNormal(self.mu_y, self.sigma_y).expand((1,))
+        prior_first_year_eff = dist.HalfNormal(self.sigma_y).expand((1,))
         first_year_eff = numpyro.sample('first_year_eff', prior_first_year_eff)
         prior_base_year_eff = dist.Normal(0, 100).expand((self.Y-1,))
         base_year_eff = numpyro.sample('year_eff', prior_base_year_eff)
@@ -56,7 +56,7 @@ class BaseModel:
 
         covid_eff = jnp.concatenate([jnp.zeros([1]), base_covid_eff])
         week_eff = jnp.concatenate([jnp.ones([1]), base_week_eff]).cumsum()
-        year_eff = jnp.concatenate([first_year_eff, base_year_eff]).cumsum()
+        year_eff = jnp.concatenate([first_year_eff + self.mu_y, base_year_eff]).cumsum()
 
         mu = year_eff[self.I_Y] * week_eff[self.I_W] + covid_eff[self.I_C]
 
