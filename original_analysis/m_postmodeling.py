@@ -18,10 +18,6 @@ def run(config):
             plt.table(summary.to_numpy(), colLabels=summary.columns, loc='center').figure.set_figheight(10.8)
             pdf.savefig()
             plt.close()
-
-            #az.plot_trace(results, var_names=["sigma", "covid_eff", "total_covid_eff"])
-            #pdf.savefig()
-            #plt.close()
             az.plot_forest(results, kind="ridgeplot", var_names="covid_eff")[0].set_title(f"For kpi {kpi}")
             pdf.savefig()
             plt.close()

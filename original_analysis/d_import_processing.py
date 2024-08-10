@@ -74,7 +74,7 @@ def check_totals(data_dict):
     diffs = {i: week_data.loc[week_data.year == int(i),].all_A.sum() - year_data.loc[i].all_A.sum() for i in year_data.index}
 
     if not all(diffs[year] == 0 for year in diffs):
-        raise(ValueError, 'Year data and week data don\'t align')
+        raise (ValueError, 'Year data and week data don\'t align')
 
     # TODO: check day totals after creating them
 

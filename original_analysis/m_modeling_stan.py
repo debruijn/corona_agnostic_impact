@@ -1,4 +1,4 @@
-import pystan
+import stan
 import pandas as pd
 
 
@@ -22,7 +22,7 @@ def run():
 
     }
 
-    model = pystan.StanModel('stan/model_v6.stan')
+    model = stan.StanModel('stan_models/model_v6.stan_models')
     fit1 = model.sampling(data=sdata, iter=1000)
     print(fit1.stansummary(pars=['year_eff', 'week_eff', 'covid_eff', 'sigma', 'sigma_year', 'sigma_week']))
     tmp = fit1.extract(pars='base_covid_eff')

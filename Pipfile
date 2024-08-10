@@ -7,13 +7,16 @@ verify_ssl = true
 
 [packages]
 pandas = "*"
-pyro-ppl = "*"
 seaborn = "*"
 statsmodels = "*"
-sklearn = "*"
+scikit-learn = "*"
 arviz = "*"
 pystan = "*"
 numpyro = "*"
+tensorflow = {extras = ["and-cuda"], version = ">=2.17"}
+jax = {extras = ["cuda12"], version = "*"}
+tensorflow-probability = "*"
+tf-keras = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.10"

@@ -6,7 +6,9 @@ estimated in a **corona-agnostic** way).
 To run this, you need to get data from the CBS (the Dutch statistics office) and put it in `data/raw/` under the name 
 `Overledenen__geslacht_en_leeftijd__per_week_{date}_{time}.csv`.
 
-Note that this has not been tested with data after October 2020.
+Note that the original analysis was done in 2020, and has not been tested with data after October 2020. A secondary
+analysis and write-up can be found in `comparison_pkgs`, although the focus is on comparing three model estimation
+methods/packages than on the application to this covid analysis. Read more [here](comparison_pkgs/README.md).
 
 ## Main idea
 For the period up to 2020, the death counts are assumed to be made up of a weekly and a yearly component:

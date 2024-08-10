@@ -2,27 +2,25 @@ import pandas as pd
 
 
 def plots_by_week(data):
-
-    data.loc[data.year<2020].filter(regex="week|all_").groupby('week').mean().plot()
+    data.loc[data.year < 2020].filter(regex="week|all_").groupby('week').mean().plot()
 
     save_loc = 'eda/by_week/'
 
     for col in data.columns:
         if col not in ('year', 'week', 'nr_days'):
             file_name = 'plot_by_week_' + col + '.png'
-            data.loc[data.year < 2020].filter(items=('week', col)).groupby('week').mean().plot().figure.\
+            data.loc[data.year < 2020].filter(items=('week', col)).groupby('week').mean().plot().figure. \
                 savefig(save_loc + file_name)
 
     ages = ("all", "under65", "65to80", "over80")
 
     for col in ages:
         file_name = 'plot_by_week_' + col + '_MF.png'
-        data.loc[data.year < 2020].filter(items=('week', col+'_M', col+'_F')).groupby('week').mean().plot().figure. \
+        data.loc[data.year < 2020].filter(items=('week', col + '_M', col + '_F')).groupby('week').mean().plot().figure. \
             savefig(save_loc + file_name)
 
 
 def run(config):
-
     # Load data
     data = pd.read_pickle(f'data/processed/deaths_by_full_week_{config.data_version}.pkl')
 
@@ -39,5 +37,6 @@ def run(config):
 if __name__ == "__main__":
     import os
     from config import config as run_config
+
     os.chdir('..')
     run(run_config)
