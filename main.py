@@ -16,7 +16,7 @@ def main():
         m_modeling_statsmodels.run(config)
     if 'tensorflow' in config.packages:
         m_modeling_tensorflow.run(config)
-    m_postmodeling.run(config)  # Visualize model results
+    m_postmodeling.run(config)  # Summarize model results in a standard way
     o_output.run(config)  # Create plots based on model results
 
 

@@ -6,8 +6,8 @@ import arviz as az
 import numpyro
 
 from numpyro_models.BaseModel import BaseModel
-from m_create_modeling_data import create_modeling_data
-from m_postmodeling import model_eval
+from python.m_create_modeling_data import create_modeling_data
+from python.m_postmodeling import model_eval
 
 
 def get_fit(results, year=-1, week=8):

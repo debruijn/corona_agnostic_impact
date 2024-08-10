@@ -3,11 +3,11 @@ import os
 import tensorflow as tf
 import numpy as np
 
-from m_create_modeling_data import create_modeling_data
+from python.m_create_modeling_data import create_modeling_data
 import tf_keras
 import tensorflow_probability as tfp
 
-from m_postmodeling import model_eval
+from python.m_postmodeling import model_eval
 
 tfd = tfp.distributions
 
@@ -18,6 +18,10 @@ tfd = tfp.distributions
 # - Using the predict, the same for two periods
 # - Then store: model, sdata, fit, predict, error, and potentially covid
 # - Then just skip pomo (or make that the output)
+
+
+n_epoch = 1000
+verbose = False
 
 
 def run(config):
@@ -45,7 +49,7 @@ def run(config):
             model.compile(optimizer=tf_keras.optimizers.Adam(learning_rate=0.1), loss=negative_loglikelihood)
             x = np.hstack((np.expand_dims(sdata['I_Y'], 1), np.expand_dims(sdata['I_W'], 1)))
             y = sdata['y'].astype(float)
-            model.fit(x, y, epochs=1000, verbose=True)
+            model.fit(x, y, epochs=n_epoch, verbose=verbose)
 
             # Get in-sample fit and forecast for next 8 weeks
             in_sample_fit = model(x).mean().numpy().squeeze()
@@ -60,7 +64,7 @@ def run(config):
             model_estimations[period] = [model_eval_in_sample, model_eval_next_8_weeks]
 
             if period == "train_test":
-                n_needed = 52 - x[-1, 1]
+                n_needed = 51 - x[-1, 1]
                 x_rest_of_year = np.array(
                     [np.repeat(x[:, 0].max(), n_needed), x[-1, 1] + range(1, n_needed + 1)]).transpose()
                 rest_of_year_fit = model(x_rest_of_year).mean().numpy().squeeze()
