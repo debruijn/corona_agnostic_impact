@@ -3,7 +3,7 @@ import os
 import statsmodels.api as sm
 import numpy as np
 
-from comparison_pkgs.m_create_modeling_data import create_modeling_data
+from original_analysis.m_create_modeling_data import create_modeling_data
 from comparison_pkgs.m_postmodeling import model_eval
 
 

@@ -5,7 +5,7 @@ import numpy as np
 import tf_keras
 import tensorflow_probability as tfp
 
-from comparison_pkgs.m_create_modeling_data import create_modeling_data
+from original_analysis.m_create_modeling_data import create_modeling_data
 from comparison_pkgs.m_postmodeling import model_eval
 
 tfd = tfp.distributions

@@ -6,7 +6,7 @@ import arviz as az
 import numpyro
 
 from numpyro_models.BaseModel import BaseModel
-from comparison_pkgs.m_create_modeling_data import create_modeling_data
+from original_analysis.m_create_modeling_data import create_modeling_data
 from comparison_pkgs.m_postmodeling import model_eval
 
 
