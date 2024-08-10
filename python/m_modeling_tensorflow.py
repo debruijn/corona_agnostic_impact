@@ -52,7 +52,7 @@ def run(config):
             x_next_8_weeks = np.array([np.repeat(x[:, 0].max(), 8), x[-1, 1] + range(1, 9)]).transpose()
             next_8_weeks_fit = model(x_next_8_weeks).mean().numpy().squeeze()
             next_8_weeks_y = np.array(
-                [data.loc[(data.year == row[0] + data.year.min()) & (data.week == row[1]), kpi].values[0]
+                [data.loc[(data.year == row[0] + data.year.min()) & (data.week == row[1] + 1), kpi].values[0]
                  for row in x_next_8_weeks])
 
             model_eval_in_sample = model_eval(in_sample_fit, y)
@@ -65,7 +65,7 @@ def run(config):
                     [np.repeat(x[:, 0].max(), n_needed), x[-1, 1] + range(1, n_needed + 1)]).transpose()
                 rest_of_year_fit = model(x_rest_of_year).mean().numpy().squeeze()
                 rest_of_year_y = np.array([
-                    data.loc[(data.year == row[0] + data.year.min()) & (data.week == row[1]), kpi].values[0] for row in
+                    data.loc[(data.year == row[0] + data.year.min()) & (data.week == row[1] + 1), kpi].values[0] for row in
                     x_rest_of_year])
                 model_eval_rest_of_year = model_eval(rest_of_year_fit, rest_of_year_y)
                 model_estimations[period].append(model_eval_rest_of_year)
