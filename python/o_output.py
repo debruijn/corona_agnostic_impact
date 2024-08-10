@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 
 def output_calc(config):
@@ -34,7 +35,7 @@ def output_calc(config):
 
         keep = res['data_fit'][['y', 'is_train', 'is_before_covid']]
         other = res['data_fit'][['fit_train', 'fit_before_covid']]
-        other.columns = [x + '_' + y for x in config.packages for y in ['fit_train', 'fit_before_covid']]
+        other.columns = [x + '_' + y for y in ['fit_train', 'fit_before_covid'] for x in config.packages]
         res['data_fit'] = keep.join(other)
 
         total_res[kpi] = res
@@ -104,7 +105,6 @@ def run(config):
 
 
 if __name__ == "__main__":
-    import os
     from config import config as run_config
 
     os.chdir('..')
