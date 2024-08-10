@@ -3,7 +3,7 @@ import pandas as pd
 
 def import_data(config):
     data = pd.read_csv(f'data/raw/Overledenen__geslacht_en_leeftijd__per_week_{config.data_version}.csv', header=[4, 5],
-                       index_col=0, skipfooter=1, engine='python')
+                       index_col=0, skipfooter=1, engine='comparison_pkgs')
     return data
 
 
@@ -74,7 +74,7 @@ def check_totals(data_dict):
     diffs = {i: week_data.loc[week_data.year == int(i),].all_A.sum() - year_data.loc[i].all_A.sum() for i in year_data.index}
 
     if not all(diffs[year] == 0 for year in diffs):
-        raise(ValueError, 'Year data and week data don\'t align')
+        raise (ValueError, 'Year data and week data don\'t align')
 
     # TODO: check day totals after creating them
 

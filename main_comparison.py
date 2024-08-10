@@ -1,7 +1,5 @@
-# Workflow
-
-from python import (d_import_processing, d_eda, m_modeling_numpyro, m_modeling_statsmodels, m_modeling_tensorflow,
-                    m_postmodeling, o_output)
+from comparison_pkgs import (d_import_processing, d_eda, m_modeling_numpyro, m_modeling_statsmodels,
+                             m_modeling_tensorflow, m_postmodeling, o_output)
 from config import config
 
 

@@ -3,8 +3,8 @@ import os
 import statsmodels.api as sm
 import numpy as np
 
-from python.m_create_modeling_data import create_modeling_data
-from python.m_postmodeling import model_eval
+from comparison_pkgs.m_create_modeling_data import create_modeling_data
+from comparison_pkgs.m_postmodeling import model_eval
 
 
 def get_fit(model_fit, year=-1, week=8, count_years=25, min_year=1995):

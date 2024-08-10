@@ -2,22 +2,13 @@ import pandas as pd
 import os
 import tensorflow as tf
 import numpy as np
-
-from python.m_create_modeling_data import create_modeling_data
 import tf_keras
 import tensorflow_probability as tfp
 
-from python.m_postmodeling import model_eval
+from comparison_pkgs.m_create_modeling_data import create_modeling_data
+from comparison_pkgs.m_postmodeling import model_eval
 
 tfd = tfp.distributions
-
-
-# Output in modeling, for each model A and B:
-# - Each model produces a fit and a OOS predict
-# - Using the fit, calculate RMSE/R^2/etc
-# - Using the predict, the same for two periods
-# - Then store: model, sdata, fit, predict, error, and potentially covid
-# - Then just skip pomo (or make that the output)
 
 
 n_epoch = 1000
