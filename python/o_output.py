@@ -51,7 +51,7 @@ def output_plots(out_calcs, config):
         # Bar plots:
         # rmse - in-sample for both periods for each package
         out_calcs[kpi]['rmse'].loc[out_calcs[kpi]['rmse']['rmse'].apply(
-            lambda x: x.endswith('_in') and not x.startswith('incl_'))].plot(kind='bar')
+            lambda x: x.endswith('_in') and not x.startswith('incl_'))].plot(kind='bar', figsize=(16, 10))
         plt.savefig(f'output/{kpi}/plots/rmse_in_sample.png')
         # rmse - in-sample/out-of-sample for train_test for each package
         out_calcs[kpi]['rmse'].loc[out_calcs[kpi]['rmse']['rmse'].apply(
@@ -59,42 +59,42 @@ def output_plots(out_calcs, config):
         plt.savefig(f'output/{kpi}/plots/rmse_train_test.png')
         # rmse - out-of-sample for all three periods for each package
         out_calcs[kpi]['rmse'].loc[out_calcs[kpi]['rmse']['rmse'].apply(
-            lambda x: not x.endswith('_in') and not x.startswith('incl_'))].plot(kind='bar')
+            lambda x: not x.endswith('_in') and not x.startswith('incl_'))].plot(kind='bar', figsize=(16, 10))
         plt.savefig(f'output/{kpi}/plots/rmse_out_of_sample.png')
 
         # r2 - in-sample for both periods for each package
         out_calcs[kpi]['r2'].loc[out_calcs[kpi]['r2']['r2'].apply(
-            lambda x: x.endswith('_in') and not x.startswith('incl_'))].plot(kind='bar')
+            lambda x: x.endswith('_in') and not x.startswith('incl_'))].plot(kind='bar', figsize=(16, 10))
         plt.savefig(f'output/{kpi}/plots/r2_in_sample.png')
 
         # total_covid - out-of-sample for all three periods for each package
-        out_calcs[kpi]['covid'].loc[out_calcs[kpi]['covid'].index == 'total', config.packages].plot(kind='bar')
+        out_calcs[kpi]['covid'].loc[out_calcs[kpi]['covid'].index == 'total', config.packages].plot(kind='bar',
+                                                                                                    figsize=(16, 10))
         plt.savefig(f'output/{kpi}/plots/total_covid.png')
 
         # Line plots:
         # covid - each week for each package
-        out_calcs[kpi]['covid'].loc[out_calcs[kpi]['covid'].index != 'total', config.packages].plot()
+        out_calcs[kpi]['covid'].loc[out_calcs[kpi]['covid'].index != 'total', config.packages].plot(figsize=(16, 10))
         plt.savefig(f'output/{kpi}/plots/covid_per_week.png')
 
         # data + fit -> full period, in-sample "before_covid" for each package
         out_calcs[kpi]['data_fit'].loc[
             out_calcs[kpi]['data_fit']['is_before_covid'] == 1, ['y', 'statsmodels_fit_before_covid',
                                                                  'numpyro_fit_before_covid',
-                                                                 'tensorflow_fit_before_covid']].plot()
+                                                                 'tensorflow_fit_before_covid']].plot(figsize=(16, 10))
         plt.savefig(f'output/{kpi}/plots/in_sample_fit_full_period.png')
 
         # data + fit -> zoomed in on 2019, using "train_test" for each package
         out_calcs[kpi]['data_fit'][1232:1284][['y', 'statsmodels_fit_train',
                                                'numpyro_fit_train',
-                                               'tensorflow_fit_train']].plot()
+                                               'tensorflow_fit_train']].plot(figsize=(16, 10))
         plt.savefig(f'output/{kpi}/plots/forecast_test_train.png')
 
         # data + fit -> zoomed in on 2020, using "before_covid" for each package
         out_calcs[kpi]['data_fit'].iloc[-50:].drop(
             columns=['is_train', 'is_before_covid'])[['y', 'statsmodels_fit_before_covid',
                                                       'numpyro_fit_before_covid',
-                                                      'tensorflow_fit_before_covid']].plot()
-
+                                                      'tensorflow_fit_before_covid']].plot(figsize=(16, 10))
         plt.savefig(f'output/{kpi}/plots/forecast_covid_period.png')
 
 
